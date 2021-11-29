@@ -86,13 +86,12 @@ ALTER TABLE public.covid_deaths
 
 --importing data from csv files covid_vaccinations and covid_deaths
 
-copy public.covid_deaths from 'C:\Users\JOSEL\MIS_437_covid\covid_vaccinations.csv' with csv header;
+copy public.covid_deaths from 'covid_vaccinations.csv' with csv header;
 
-copy public.covid_deaths from 'C:\Users\JOSEL\MIS_437_covid\covid_deaths.csv' with csv header;
+copy public.covid_deaths from 'covid_deaths.csv' with csv header;
 
 -- review the tables data 
 select * from covid_deaths
-WHERE continent is NOT NULL
 order by 3,4;
 
 select * from public.covid_vaccinations
@@ -108,20 +107,20 @@ ORDER by 1,2;
 --Provavility to die if contract covid in specific conutry (example country ecuador)
 SELECT location, date, total_cases, total_deaths, (total_deaths/total_cases)*100 as DeathPercentage
 FROM covid_deaths
-WHERE location like 'Ecuador'
+WHERE location like '%sta%'
 ORDER by 1,2;
 
 -- Comper the total cases vs population 
 -- Indicates the porcentage of population infected whit covid
 SELECT location, date, total_cases, population, (total_deaths/population)*100 as DeathPopulation
 FROM covid_deaths
---WHERE location like 'Ecuador'
+--WHERE location like '%sta%'
 ORDER by 1,2;
 
 -- Countries with highest infection rate cmpara from population
 SELECT location, population, MAX(total_cases) as HighesInfectionCount, MAX((total_cases/population))*100 as PercentOfPopulationInfected
 FROM covid_deaths
---WHERE location like 'Ecuador'
+--WHERE location like '%sta%'
 GROUP by location, population
 ORDER by PercentOfPopulationInfected DESC;
 
